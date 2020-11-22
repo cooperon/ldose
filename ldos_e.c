@@ -78,18 +78,27 @@ int main(int argc, char*argv[])
  printf("nb1max=%d, nb2max=%d, nb3max=%d\n",  nb1max, nb2max, nb3max);
  printf("a1mag=%f, a2mag=%f, a3mag=%f\n",  a1mag, a2mag, a3mag);
 
-
- for(i=0;i<data.nBands;i++)
+ if(!data.bands)
  {
-  if(data.bands[i] <=0 || data.bands[i]>nband)
-   break;
+  data.nBands=nband;
+  data.bands = (int*)calloc( data.nBands,sizeof(*data.bands) );
+  for(i=0;i<data.nBands;i++)
+   data.bands[i]=i+1;
  }
- if(i<data.nBands)
- 	{
- 	 printf("Error! Wrong band number %d (i=%d)\n", data.bands[i]	,i+1);
- 	 free(data.bands);
- 	 return 0;
- 	}	
+ else
+ {
+  for(i=0;i<data.nBands;i++)
+  {
+   if(data.bands[i] <=0 || data.bands[i]>nband)
+    break;
+  }
+  if(i<data.nBands)
+  {
+   printf("Error! Wrong band number %d (i=%d)\n", data.bands[i]	,i+1);
+   free(data.bands);
+   return 0;
+  }
+ }	
  if(data.nX>1)
  	dx=(data.xMax-data.xMin)/(data.nX-1);
  if(data.nY>1)

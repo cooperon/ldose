@@ -327,11 +327,13 @@ int VerifyInputData(INPUT_DATA *data)
    iret++;
   }
  
+/*
  if (data->bands == NULL)
  {
 	 printf("No bands defined\n");
 	 iret++;
  }
+*/
 
  if (data->nThreads <= 0 || data->nThreads> get_nprocs())
  {
